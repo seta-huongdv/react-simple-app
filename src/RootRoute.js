@@ -21,7 +21,7 @@ const RootRoute = ({
   isPermittedToRenderCurrentPage && (
     <UniversalComponent
       page={pageComponent}
-      isLoading={false}
+      isLoading={isLoading}
       currentRoute={currentRoute}
     />
   );
