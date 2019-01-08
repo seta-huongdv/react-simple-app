@@ -4,23 +4,18 @@ import {
   all,
   fork,
   cancel,
-  put,
   takeLatest
 } from 'redux-saga/effects';
 import { isEqual } from 'lodash';
-import { redirect } from 'redux-first-router';
-import { modules } from 'veritone-redux-common';
-const {
-  user: { userIsAuthenticated }
-} = modules;
+// import { redirect } from 'redux-first-router';
 
 import {
   selectRoutesMap,
   // selectRouteType,
   selectPreviousRoute
-} from 'modules/routing';
-import { ROUTE_FORBIDDEN } from './';
-import { BOOT_FINISHED, bootDidFinish } from 'state/modules/app';
+} from './index';
+// import { ROUTE_FORBIDDEN } from './index.js';
+import { BOOT_FINISHED, bootDidFinish } from '../app';
 
 // setup sagas on application boot
 export function* watchRouteSagas() {
@@ -36,11 +31,11 @@ export function* watchRouteSagas() {
       yield take(BOOT_FINISHED);
     }
 
-    const userIsAuthed = yield select(userIsAuthenticated);
-    if (routesMap[currentRoute.type].requiresAuth && !userIsAuthed) {
-      // do not run sagas for inaccessible routes
-      return;
-    }
+    // const userIsAuthed = yield select(userIsAuthenticated);
+    // if (routesMap[currentRoute.type].requiresAuth && !userIsAuthed) {
+    //   // do not run sagas for inaccessible routes
+    //   return;
+    // }
 
     const previousRoute = yield select(selectPreviousRoute);
 
@@ -64,24 +59,24 @@ export function* watchRouteSagas() {
   });
 }
 
-function* redirectToForbiddenRouteOnApiAuthErrors() {
-  const forbiddenStatusCodes = [401, 403];
+// function* redirectToForbiddenRouteOnApiAuthErrors() {
+//   const forbiddenStatusCodes = [401, 403];
 
-  yield takeLatest(
-    ({ payload: { name, status } = {} } = {}) =>
-      name === 'ApiError' && forbiddenStatusCodes.includes(status),
-    function*() {
-      if (yield select(userIsAuthenticated)) {
-        // ignore if user is not logged in
-        yield put(redirect({ type: ROUTE_FORBIDDEN }));
-      }
-    }
-  );
-}
+//   yield takeLatest(
+//     ({ payload: { name, status } = {} } = {}) =>
+//       name === 'ApiError' && forbiddenStatusCodes.includes(status),
+//     function*() {
+//       if (yield select(userIsAuthenticated)) {
+//         // ignore if user is not logged in
+//         yield put(redirect({ type: ROUTE_FORBIDDEN }));
+//       }
+//     }
+//   );
+// }
 
 export default function* routes() {
   yield all([
     fork(watchRouteSagas),
-    fork(redirectToForbiddenRouteOnApiAuthErrors)
+    //fork(redirectToForbiddenRouteOnApiAuthErrors)
   ]);
 }

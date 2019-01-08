@@ -1,5 +1,7 @@
+export const ROUTE_FORBIDDEN = 'route/ROUTE_FORBIDDEN';
 export const ROUTE_AUTH = 'route/ROUTE_AUTH';
 export const ROUTE_EXAMPLE_TABS = 'route/ROUTE_EXAMPLE_TABS';
+export const ROUTE_HOME = 'route/ROUTE_HOME';
 
 
 export const selectCurrentRoutePayload = state => state.location.payload;

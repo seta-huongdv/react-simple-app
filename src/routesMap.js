@@ -1,6 +1,7 @@
-// import { NOT_FOUND } from 'redux-first-router';
+import { NOT_FOUND } from 'redux-first-router';
 import {
   ROUTE_EXAMPLE_TABS,
+  ROUTE_HOME
 } from './state/modules/routing/index.js';
 
 export default {
@@ -21,9 +22,14 @@ export default {
     //   }
     // ]
   },
-  [ROUTE_EXAMPLE_TABS]: {
+  [ROUTE_HOME]: {
     path: '/',
     component: 'ExamplePage'
+  },
+  [NOT_FOUND]: {
+    path: '/not-found',
+    component: 'NotFound',
+    // requiresAuth: true
   }
 
 };

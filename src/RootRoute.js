@@ -15,13 +15,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const RootRoute = ({
   pageComponent,
   isLoading = false,
-  isPermittedToRenderCurrentPage = false,
+  isPermittedToRenderCurrentPage = true, // todo: check permission for this 
   currentRoute
 }) =>
   isPermittedToRenderCurrentPage && (
     <UniversalComponent
       page={pageComponent}
-      isLoading={isLoading}
+      isLoading={false}
       currentRoute={currentRoute}
     />
   );
@@ -48,7 +48,6 @@ export default connect(state => {
   const routesMap = selectRoutesMap(state);
   const routeType = selectRouteType(state);
   const currentRoute = routesMap[routeType];
-
   return {
     currentRoute,
     // isPermittedToRenderCurrentPage: true,
