@@ -1,9 +1,12 @@
 import React from 'react';
-
+import Example from '../../components/Example';
 export class ExamplePage extends React.Component {
   render() {
     return (
-      <h1>ExamplePage</h1>
+      <div>
+        <h1>ExamplePage</h1>
+        <Example />
+      </div>
     );
   }
 }
